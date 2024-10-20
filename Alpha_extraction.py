@@ -8,7 +8,38 @@ from dotenv import load_dotenv
 # Load environment variables from the .env file
 load_dotenv()
 
+def get_latest_date_from_blob(blob_name):
+    """
+    Retrieve the latest date from the existing CSV file in Blob Storage.
+    """
+    connect_str = os.getenv('CONNECTION_STRING')
+    container_name = os.getenv('CONTAINER_NAME')
+
+    blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+    container_client = blob_service_client.get_container_client(container_name)
+    blob_client = container_client.get_blob_client(blob_name)
+
+    try:
+        # Download the existing CSV file
+        blob_data = blob_client.download_blob().readall()
+        existing_df = pd.read_csv(StringIO(blob_data.decode('utf-8')))
+
+        # Ensure 'date' column is in datetime format
+        existing_df['date'] = pd.to_datetime(existing_df['date'])
+
+        # Find the latest date
+        latest_date = existing_df['date'].max()
+
+        return latest_date
+
+    except Exception as ex:
+        print(f"Error retrieving latest date: {ex}")
+        return None
+
 def extract_and_upload(api_key, symbols, blob_name, function='TIME_SERIES_DAILY', outputsize='full'):
+    # Get the latest date from the existing data in the Blob
+    latest_date = get_latest_date_from_blob(blob_name)
+
     # Dictionary to store the DataFrame for each stock
     stocks_df = {}
 
@@ -44,6 +75,10 @@ def extract_and_upload(api_key, symbols, blob_name, function='TIME_SERIES_DAILY'
             # Sort the DataFrame by date (index)
             df = df.sort_index()
 
+            # Filter data if the latest_date exists
+            if latest_date is not None:
+                df = df[df.index > latest_date]
+
             # Store the DataFrame in the dictionary with the symbol as the key
             stocks_df[symbol] = df
 
@@ -61,6 +96,10 @@ def extract_and_upload(api_key, symbols, blob_name, function='TIME_SERIES_DAILY'
 
     # Concatenate all the DataFrames into one DataFrame
     combined_df = pd.concat(df_list)
+
+    if combined_df.empty:
+        print("No new data to upload.")
+        return
 
     # Reset the index to have a continuous index
     combined_df.reset_index(inplace=True)
@@ -96,12 +135,13 @@ def upload_to_blob_storage(df, blob_name):
     except Exception as ex:
         print(f"An error occurred: {ex}")
 
-# callthe function
+# Call the function
 if __name__ == "__main__":
-    api_key = os.getenv('ALPHA_VANTAGE_API_KEY')  ##'8GSEZH7YO4E598CK'  Store your API key in .env
+    api_key = '8GSEZH7YO4E598CK'  # os.getenv('ALPHA_VANTAGE_API_KEY')  # Store your API key in .env
     symbols = ['AAPL', 'MSFT', 'TSLA', 'IBM', 'AMZN']
     
     # Name of the blob you want to create
     blob_name = "rawdata/raw_data.csv"  
     # Extract data from Alpha Vantage API and upload to Azure Blob Storage
     extract_and_upload(api_key, symbols, blob_name)
+
