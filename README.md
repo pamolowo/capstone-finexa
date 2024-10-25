@@ -8,17 +8,17 @@ The project involves automating the entire ETL process using Apache Airflow, fro
 
 ###
 ***Key Features:***
-*Automated extraction of financial data from the Alpha Vantage API
-*Incremental data loading for efficiency and data freshness
-*Data transformation using Azure Databricks
-*Secure data handling with personal tokens, API keys, connection strings, and Azure Entra ID
-*Data validation and error logging at every stage
-*Scalable cloud infrastructure using Azure Blob Storage for data storage and PostgreSQL for data persistence
+* Automated extraction of financial data from the Alpha Vantage API
+* Incremental data loading for efficiency and data freshness
+* Data transformation using Azure Databricks
+* Secure data handling with personal tokens, API keys, connection strings, and Azure Entra ID
+* Data validation and error logging at every stage
+* Scalable cloud infrastructure using Azure Blob Storage for data storage and PostgreSQL for data persistence
 ***Prerequisites***
-*Ubuntu Virtual Environment: Ubuntu 20.04 or higher (installation can be done locally or on any cloud instance).
-*Azure Subscription: Ensure you have an active Azure account for setting up resources.
-*API Key for Alpha Vantage: Required to fetch stock data.
-*PostgreSQL Server: Either locally hosted or on a cloud provider.
+* Ubuntu Virtual Environment: Ubuntu 20.04 or higher (installation can be done locally or on any cloud instance).
+* Azure Subscription: Ensure you have an active Azure account for setting up resources.
+* API Key for Alpha Vantage: Required to fetch stock data.
+* PostgreSQL Server: Either locally hosted or on a cloud provider.
 
 ###
 ***Step-by-Step Setup Guide***
@@ -38,13 +38,13 @@ source finexa-venv/bin/activate
 Inside your virtual environment, install the following Python dependencies for the project:
 
 
-pip install apache-airflow
-pip install python-dotenv
-pip install azure-storage-blob
-pip install pyspark
-pip install pandas
-pip install psycopg2  # PostgreSQL connector
-Other dependencies may be installed based on the environment, for instance, requests for API calls.
+* pip install apache-airflow
+* pip install python-dotenv
+* pip install azure-storage-blob
+* pip install pyspark
+* pip install pandas
+* pip install psycopg2  # PostgreSQL connector
+* Other dependencies may be installed based on the environment, for instance, requests for API calls.
 
 ###
 ***3. Install and Configure Apache Airflow***
@@ -169,8 +169,4 @@ Perform data validation and logging throughout the process.
 
 ###
 ***Conclusion***
-<<<<<<< HEAD
 This ETL pipeline project demonstrates how you can build a secure, scalable, and automated data pipeline using modern tools such as Apache Airflow, Azure Blob Storage, Databricks, and PostgreSQL. The focus on incremental data loading, duplicate removal, and data checks ensures that your data remains accurate and up to date. Logging and security measures were implemented to provide a production-ready solution.
-=======
-This ETL pipeline project demonstrates how you can build a secure, scalable, and automated data pipeline using modern tools such as Apache Airflow, Azure Blob Storage, Databricks, and PostgreSQL. The focus on incremental data loading, duplicate removal, and data checks ensures that your data remains accurate and up to date. Logging and security measures were implemented to provide a production-ready solution.
->>>>>>> eafa82f109d2b2dbe341f77b432edb4f87101dd5
