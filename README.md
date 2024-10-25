@@ -169,4 +169,8 @@ Perform data validation and logging throughout the process.
 
 ###
 ***Conclusion***
+<<<<<<< HEAD
 This ETL pipeline project demonstrates how you can build a secure, scalable, and automated data pipeline using modern tools such as Apache Airflow, Azure Blob Storage, Databricks, and PostgreSQL. The focus on incremental data loading, duplicate removal, and data checks ensures that your data remains accurate and up to date. Logging and security measures were implemented to provide a production-ready solution.
+=======
+This ETL pipeline project demonstrates how you can build a secure, scalable, and automated data pipeline using modern tools such as Apache Airflow, Azure Blob Storage, Databricks, and PostgreSQL. The focus on incremental data loading, duplicate removal, and data checks ensures that your data remains accurate and up to date. Logging and security measures were implemented to provide a production-ready solution.
+>>>>>>> eafa82f109d2b2dbe341f77b432edb4f87101dd5
